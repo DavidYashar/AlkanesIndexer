@@ -769,6 +769,9 @@ impl EspoProvider for SystemAlkanes {
     async fn get_address_outpoints(&self, address: &str) -> Result<alkanes_cli_common::JsonValue> {
         self.provider.get_address_outpoints(address).await
     }
+    async fn get_address_spendable_outpoints(&self, address: &str) -> Result<alkanes_cli_common::JsonValue> {
+        self.provider.get_address_spendable_outpoints(address).await
+    }
     async fn get_outpoint_balances(&self, outpoint: &str) -> Result<alkanes_cli_common::JsonValue> {
         self.provider.get_outpoint_balances(outpoint).await
     }
@@ -2841,6 +2844,9 @@ impl alkanes_cli_common::SystemAlkanes for SystemAlkanes {
                     mempool_indexer: false,
                     split_transactions: false,
                     known_pending_tx_hexes: Vec::new(),
+                    prefetched_utxos: Vec::new(),
+                    max_indexed_height: None,
+                    utxo_source: Default::default(),
                 };
 
                 let mut current_state = provider.execute(execute_params.clone()).await?;

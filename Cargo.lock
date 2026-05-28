@@ -4095,6 +4095,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "engine-claim-manager"
+version = "10.0.0"
+dependencies = [
+ "alkanes-runtime",
+ "alkanes-support",
+ "alkanes-wit-build",
+ "anyhow",
+ "metashrew-support",
+]
+
+[[package]]
+name = "engine-token"
+version = "10.0.0"
+dependencies = [
+ "alkanes-runtime",
+ "alkanes-std-factory-support",
+ "alkanes-support",
+ "alkanes-wit-build",
+ "anyhow",
+ "metashrew-support",
+]
+
+[[package]]
 name = "enum-ordinalize"
 version = "4.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"

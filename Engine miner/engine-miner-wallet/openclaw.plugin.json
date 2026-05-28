@@ -1,0 +1,68 @@
+{
+  "id": "engine-miner-wallet",
+  "name": "Engine miner Wallet",
+  "description": "Taproot-first claim-focused wallet scaffold for Engine miner agents on OpenClaw.",
+  "version": "0.1.0",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true
+      },
+      "network": {
+        "type": "string",
+        "enum": [
+          "mainnet",
+          "signet",
+          "regtest"
+        ],
+        "default": "mainnet"
+      },
+      "policyMode": {
+        "type": "string",
+        "enum": [
+          "claim_only",
+          "claim_and_sweep"
+        ],
+        "default": "claim_only"
+      },
+      "engineMinerApiUrl": {
+        "type": "string"
+      },
+      "alkanesProviderUrl": {
+        "type": "string"
+      },
+      "walletStateDir": {
+        "type": "string"
+      },
+      "requireBroadcastConfirmation": {
+        "type": "boolean",
+        "default": true
+      },
+      "maxFeeSats": {
+        "type": "integer",
+        "minimum": 0,
+        "default": 5000
+      },
+      "coldSweepAddress": {
+        "type": "string"
+      }
+    }
+  },
+  "activation": {
+    "onStartup": true
+  },
+  "contracts": {
+    "tools": [
+      "engine_miner_wallet_status",
+      "engine_miner_wallet_get_payout_address",
+      "engine_miner_wallet_sign_registration_challenge",
+      "engine_miner_wallet_list_claimable_rewards",
+      "engine_miner_wallet_prepare_claim",
+      "engine_miner_wallet_sign_prepared_claim",
+      "engine_miner_wallet_broadcast_prepared_claim"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+[package]
+name = "engine-claim-manager"
+version.workspace = true
+edition.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+test = []
+
+[dependencies]
+alkanes-support = { workspace = true }
+alkanes-runtime = { workspace = true }
+metashrew-support = { workspace = true }
+anyhow = { workspace = true }
+
+[build-dependencies]
+alkanes-wit-build = { path = "../../crates/alkanes-wit-build" }

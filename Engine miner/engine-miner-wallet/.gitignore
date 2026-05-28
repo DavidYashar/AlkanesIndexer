@@ -1,0 +1,9 @@
+node_modules/
+*.tgz
+.DS_Store
+Thumbs.db
+
+# Local wallet and environment state
+.env
+.env.*
+wallet-data/

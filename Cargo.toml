@@ -14,6 +14,8 @@ members = [
     "alkanes/alkanes-std-beacon-proxy",
     "alkanes/alkanes-std-owned-token",
     "alkanes/alkanes-std-merkle-distributor",
+    "alkanes/engine-token",
+    "alkanes/engine-claim-manager",
     "alkanes/alkanes-std-test",
     "alkanes/alkanes-std-test-2",
     "vendor/qubitcoin-crypto",

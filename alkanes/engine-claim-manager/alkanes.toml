@@ -1,0 +1,18 @@
+[contract]
+name = "EngineClaimManager"
+
+[opcodes]
+initialize = 0
+settle-claim = 1
+get-engine-token = 100
+get-token-mint-opcode = 101
+get-claim-status = 102
+get-auth-token-block = 103
+get-auth-token-tx = 104
+
+[views]
+get-engine-token = true
+get-token-mint-opcode = true
+get-claim-status = true
+get-auth-token-block = true
+get-auth-token-tx = true

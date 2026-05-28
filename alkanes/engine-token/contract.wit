@@ -1,0 +1,24 @@
+package engine:engine-token;
+
+interface engine-token {
+    record alkane-id {
+        block: u64,
+        block-hi: u64,
+        tx: u64,
+        tx-hi: u64,
+    }
+
+    initialize: func(claim-manager: alkane-id, cap: u64, premine-units: u64, name: string, symbol: string) -> result<_, string>;
+    mint: func(token-units: u64) -> result<_, string>;
+    burn: func() -> result<_, string>;
+    get-name: func() -> result<string, string>;
+    get-symbol: func() -> result<string, string>;
+    get-total-supply: func() -> result<u64, string>;
+    get-cap: func() -> result<u64, string>;
+    get-claim-manager: func() -> result<alkane-id, string>;
+    get-data: func() -> result<list<u8>, string>;
+}
+
+world engine-token-world {
+    export engine-token;
+}

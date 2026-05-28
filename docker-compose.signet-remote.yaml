@@ -1,0 +1,50 @@
+volumes:
+  metashrew-data:
+  lua-scripts:
+
+services:
+  metashrew:
+    build:
+      dockerfile: docker/metashrew/Dockerfile
+      context: .
+    image: rockshrew:alkanes
+    volumes:
+      - metashrew-data:/data
+    environment:
+      RUST_LOG: none
+      DAEMON_RPC_ADDR: ${REMOTE_SIGNET_RPC_URL}
+      AUTH: ${REMOTE_SIGNET_RPC_USER}:${REMOTE_SIGNET_RPC_PASSWORD}
+      DB_PATH: /data
+      LOG_FILTERS: none,rockshrew=debug
+      HOST: 0.0.0.0
+      PORT: 8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  jsonrpc:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        - PACKAGE=alkanes-jsonrpc
+    image: alkanes-jsonrpc:latest
+    depends_on:
+      - metashrew
+    volumes:
+      - lua-scripts:/data/lua-scripts
+    environment:
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 18888
+      BITCOIN_RPC_URL: ${REMOTE_SIGNET_RPC_URL}
+      BITCOIN_RPC_USER: ${REMOTE_SIGNET_RPC_USER}
+      BITCOIN_RPC_PASSWORD: ${REMOTE_SIGNET_RPC_PASSWORD}
+      METASHREW_URL: http://metashrew:8080
+      MEMSHREW_URL: http://127.0.0.1:8081
+      ORD_URL: http://127.0.0.1:8090
+      ESPLORA_URL: https://mempool.space/signet/api
+      LUA_SCRIPT_PATH: /data/lua-scripts
+      RUST_LOG: info
+    ports:
+      - "18888:18888"
+    restart: unless-stopped

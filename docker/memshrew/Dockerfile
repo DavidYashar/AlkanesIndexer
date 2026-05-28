@@ -16,7 +16,9 @@ WORKDIR /build
 # Copy workspace files
 COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
 COPY crates ./crates
+COPY alkanes ./alkanes
 COPY src ./src
+COPY vendor ./vendor
 
 # Build memshrew-p2p binary
 RUN cargo build --release -p memshrew-p2p

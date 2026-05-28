@@ -1,0 +1,62 @@
+{
+  "name": "@kerimatalayturkish-dotcom/engine-miner-openclaw-wallet",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "OpenClaw-installable Taproot-first wallet scaffold for Engine miner.",
+  "author": "kerimatalayturkish-dotcom",
+  "license": "MIT",
+  "bin": {
+    "engine-miner-wallet-admin": "./admin.js"
+  },
+  "keywords": [
+    "openclaw",
+    "engine-miner",
+    "wallet",
+    "taproot",
+    "bitcoin",
+    "alkanes",
+    "clawhub"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "admin.js",
+    "index.js",
+    "lib",
+    "openclaw.plugin.json",
+    "README.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "wallet:status": "node ./admin.js status",
+    "wallet:address": "node ./admin.js address"
+  },
+  "dependencies": {
+    "bip32": "^5.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^7.0.1",
+    "tiny-secp256k1": "^2.2.4"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.5.17"
+  },
+  "peerDependenciesMeta": {
+    "openclaw": {
+      "optional": true
+    }
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.js"
+    ],
+    "compat": {
+      "pluginApi": ">=2026.5.17",
+      "minGatewayVersion": "2026.5.17"
+    },
+    "build": {
+      "openclawVersion": "2026.5.17",
+      "pluginSdkVersion": "2026.5.17"
+    }
+  }
+}

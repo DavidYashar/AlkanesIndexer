@@ -4,8 +4,24 @@
 //! including subcommands for interacting with `bitcoind`. It also contains
 //! the logic for pretty-printing complex JSON responses.
 
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ValueEnum};
 use serde::{Deserialize, Serialize};
+
+#[derive(ValueEnum, Debug, Clone, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum UtxoSourceOption {
+    Metashrew,
+    Espo,
+}
+
+impl From<UtxoSourceOption> for alkanes_cli_common::alkanes::types::UtxoDataSource {
+    fn from(value: UtxoSourceOption) -> Self {
+        match value {
+            UtxoSourceOption::Metashrew => Self::Metashrew,
+            UtxoSourceOption::Espo => Self::Espo,
+        }
+    }
+}
 
 // Chad's Journal:
 //
@@ -2612,6 +2628,15 @@ pub struct AlkanesExecute {
     /// Enable transaction tracing
     #[arg(long)]
     pub trace: bool,
+    /// Enable mempool tracing for pending UTXO inscription state
+    #[arg(long)]
+    pub mempool_indexer: bool,
+    /// Split wrap and execute into separate chained transactions when needed
+    #[arg(long)]
+    pub split_transactions: bool,
+    /// Data source used for spendable UTXO discovery
+    #[arg(long, value_enum)]
+    pub utxo_source: Option<UtxoSourceOption>,
     /// Mine a block after broadcasting (regtest only)
     #[arg(long)]
     pub mine: bool,

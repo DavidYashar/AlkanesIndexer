@@ -9,3 +9,5 @@ memory-bank/progress.md
 scripts/.addresses.json
 .pkgenv
 pkg-sa-key.json
+signet-remote.env
+signet-ubuntu-local.env

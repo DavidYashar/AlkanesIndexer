@@ -20,7 +20,9 @@ WORKDIR /build
 # Copy workspace files
 COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
 COPY crates ./crates
+COPY alkanes ./alkanes
 COPY src ./src
+COPY vendor ./vendor
 
 # Build alkanes.wasm
 RUN cargo build --release -p alkanes --target wasm32-unknown-unknown
@@ -41,6 +43,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=builder /build/target/release/rockshrew-mono /usr/local/bin/
 COPY --from=builder /build/target/wasm32-unknown-unknown/release/alkanes.wasm /metashrew/indexer.wasm
 COPY docker/metashrew/docker-entrypoint.sh /docker-entrypoint.sh
+RUN sed -i 's/\r$//' /docker-entrypoint.sh && chmod +x /docker-entrypoint.sh
 
 # Create non-root user
 RUN useradd -r -s /bin/false metashrew \

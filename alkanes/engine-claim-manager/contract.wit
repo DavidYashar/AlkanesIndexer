@@ -1,0 +1,22 @@
+package engine:engine-claim-manager;
+
+interface engine-claim-manager {
+    record alkane-id {
+        block: u64,
+        block-hi: u64,
+        tx: u64,
+        tx-hi: u64,
+    }
+
+    initialize: func(engine-token: alkane-id, settlement-auth-units: u64) -> result<_, string>;
+    settle-claim: func(reward-units: u64, claim-hash-hi: u64, claim-hash-lo: u64) -> result<_, string>;
+    get-engine-token: func() -> result<alkane-id, string>;
+    get-token-mint-opcode: func() -> result<u64, string>;
+    get-claim-status: func(claim-hash-hi: u64, claim-hash-lo: u64) -> result<u64, string>;
+    get-auth-token-block: func() -> result<u64, string>;
+    get-auth-token-tx: func() -> result<u64, string>;
+}
+
+world engine-claim-manager-world {
+    export engine-claim-manager;
+}
