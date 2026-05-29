@@ -42,6 +42,7 @@ Notes:
 
 - `rpcallowip=172.17.0.0/16` is the common Docker bridge subnet on Ubuntu. If your Docker bridge uses a different subnet, adjust it.
 - `host.docker.internal` is provided to the containers through `host-gateway` in the compose file.
+- In `signet-ubuntu-local.env`, `HOST_SIGNET_RPC_HOSTPORT` must point at the native Ubuntu host bitcoind RPC endpoint, typically `host.docker.internal:38332`. Do not use `127.0.0.1:38332` there unless bitcoind is running inside the same container.
 - If you do not want RPC reachable off-host, keep host firewall rules tight and only allow the Docker bridge.
 
 ## Files Added For Ubuntu Runtime
@@ -91,6 +92,20 @@ curl -s http://127.0.0.1:18888 \
   -d '{"jsonrpc":"2.0","id":1,"method":"btc_getblockcount","params":[]}'
 ```
 
+Check the RPC endpoint wiring inside the Metashrew container:
+
+```bash
+docker compose --env-file signet-ubuntu-local.env -f docker-compose.signet-ubuntu-local.yaml exec metashrew sh -lc 'printf "%s\n" "$DAEMON_RPC_ADDR"'
+```
+
+Expected value:
+
+```text
+http://host.docker.internal:38332
+```
+
+If you see `127.0.0.1:38332` there while bitcoind is native on Ubuntu, Metashrew is pointed at the wrong endpoint.
+
 Check Metashrew:
 
 ```bash
@@ -98,6 +113,8 @@ curl -s http://127.0.0.1:8080 \
   -H 'content-type: application/json' \
   -d '{"jsonrpc":"2.0","id":1,"method":"metashrew_height","params":[]}'
 ```
+
+Healthy behavior after the endpoint is fixed: `metashrew_height` should steadily climb toward the host `btc_getblockcount` value. If `btc_getblockcount` is correct but `metashrew_height` stays very low for a long time, inspect the Metashrew logs before retrying claim settlement.
 
 ## Repoint Engine Miner If Backend Stays On Windows
 
